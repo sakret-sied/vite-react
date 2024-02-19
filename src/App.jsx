@@ -1,46 +1,38 @@
 import './App.css';
-import JournalItem from './components/JournalItem/JournalItem.jsx';
-import CardButton from './components/CardButton/CardButton.jsx';
 import LeftPanel from './layouts/LeftPanel/LeftPanel.jsx';
 import Body from './layouts/Body/Body.jsx';
 import Header from './components/Header/Header.jsx';
 import JournalList from './components/JournalList/JournalList.jsx';
 import JournalAddItem from './components/JournalAddItem/JournalAddItem.jsx';
 import JournalForm from './components/JournalForm/JournalForm.jsx';
+import { useState } from 'react';
+
+const INITIAL_DATA = [];
 
 function App() {
-  const data = [
-    {
-      title: 'Title',
-      post: 'Post',
-      date: new Date()
-    }
-  ];
+  const [items, setItems] = useState(INITIAL_DATA);
+
+  const addItem = (item) => {
+    setItems((oldItems) => [
+      ...oldItems,
+      {
+        id: Math.max(...oldItems.map((i) => i.id), 0) + 1,
+        title: item.title,
+        text: item.text,
+        date: new Date(item.date)
+      }
+    ]);
+  };
 
   return (
     <div className="app">
       <LeftPanel>
-        <Header/>
-        <JournalAddItem/>
-        <JournalList>
-          <CardButton>
-            <JournalItem
-              title={data[0].title}
-              post={data[0].post}
-              date={data[0].date}
-            />
-          </CardButton>
-          <CardButton>
-            <JournalItem
-              title={data[0].title}
-              post={data[0].post}
-              date={data[0].date}
-            />
-          </CardButton>
-        </JournalList>
+        <Header />
+        <JournalAddItem />
+        <JournalList items={items} />
       </LeftPanel>
       <Body>
-        <JournalForm/>
+        <JournalForm onSubmit={addItem} />
       </Body>
     </div>
   );
