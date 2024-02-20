@@ -1,11 +1,11 @@
-import './App.css';
-import LeftPanel from './layouts/LeftPanel/LeftPanel.jsx';
-import Body from './layouts/Body/Body.jsx';
-import Header from './components/Header/Header.jsx';
-import JournalList from './components/JournalList/JournalList.jsx';
-import JournalAddItem from './components/JournalAddItem/JournalAddItem.jsx';
-import JournalForm from './components/JournalForm/JournalForm.jsx';
 import { useState } from 'react';
+import LeftPanel from './layouts/LeftPanel/LeftPanel.jsx';
+import Header from './components/Header/Header.jsx';
+import JournalAddItem from './components/JournalAddItem/JournalAddItem.jsx';
+import JournalList from './components/JournalList/JournalList.jsx';
+import Body from './layouts/Body/Body.jsx';
+import JournalForm from './components/JournalForm/JournalForm.jsx';
+import './App.css';
 
 const INITIAL_DATA = [];
 

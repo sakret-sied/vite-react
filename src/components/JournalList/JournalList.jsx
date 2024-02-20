@@ -1,4 +1,3 @@
-import './JournalList.css';
 import CardButton from '../CardButton/CardButton.jsx';
 import JournalItem from '../JournalItem/JournalItem.jsx';
 

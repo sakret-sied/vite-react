@@ -1,5 +1,5 @@
-import './JournalForm.css';
 import Button from '../Button/Button.jsx';
+import './JournalForm.css';
 
 function JournalForm({ onSubmit }) {
   const addJournalItem = (e) => {

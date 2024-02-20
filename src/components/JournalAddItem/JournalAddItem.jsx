@@ -1,5 +1,5 @@
-import './JournalAddItem.css';
 import CardButton from '../CardButton/CardButton.jsx';
+import './JournalAddItem.css';
 
 function JournalAddItem() {
   return (
