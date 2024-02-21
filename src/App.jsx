@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import LeftPanel from './layouts/LeftPanel/LeftPanel.jsx';
 import Header from './components/Header/Header.jsx';
 import JournalAddItem from './components/JournalAddItem/JournalAddItem.jsx';
+import JournalForm from './components/JournalForm/JournalForm.jsx';
 import JournalList from './components/JournalList/JournalList.jsx';
 import Body from './layouts/Body/Body.jsx';
-import JournalForm from './components/JournalForm/JournalForm.jsx';
+import LeftPanel from './layouts/LeftPanel/LeftPanel.jsx';
 import './App.css';
 
 function App() {
@@ -32,8 +32,9 @@ function App() {
       {
         id: Math.max(...oldItems.map((i) => i.id), 0) + 1,
         title: item.title,
-        text: item.text,
-        date: new Date(item.date)
+        date: new Date(item.date),
+        post: item.post,
+        tag: item.tag
       }
     ]);
   };
