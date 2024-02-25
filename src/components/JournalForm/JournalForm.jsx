@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 import { useEffect, useReducer, useRef } from 'react';
 import Button from '../Button/Button.jsx';
-import { INITIAL_STATE, formReducer } from './JournalForm.state.js';
 import Input from '../Input/Input.jsx';
-import styles from './JournalForm.module.css';
+import { INITIAL_STATE, formReducer } from './JournalForm.state.js';
 import inputStyles from '../Input/Input.module.css';
+import styles from './JournalForm.module.css';
 
 function JournalForm({ onSubmit }) {
   const [formState, dispatchForm] = useReducer(formReducer, INITIAL_STATE);
