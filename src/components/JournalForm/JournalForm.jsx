@@ -1,10 +1,11 @@
 import classNames from 'classnames';
-import { useEffect, useReducer, useRef } from 'react';
+import { useContext, useEffect, useReducer, useRef } from 'react';
+import { UserContext } from '../../context/user.context.jsx';
 import Button from '../Button/Button.jsx';
 import Input from '../Input/Input.jsx';
-import { INITIAL_STATE, formReducer } from './JournalForm.state.js';
 import inputStyles from '../Input/Input.module.css';
 import styles from './JournalForm.module.css';
+import { INITIAL_STATE, formReducer } from './JournalForm.state.js';
 
 function JournalForm({ onSubmit }) {
   const [formState, dispatchForm] = useReducer(formReducer, INITIAL_STATE);
@@ -12,6 +13,7 @@ function JournalForm({ onSubmit }) {
   const titleRef = useRef();
   const dateRef = useRef();
   const postRef = useRef();
+  const { userId } = useContext(UserContext);
 
   const focusError = (isValid) => {
     switch (true) {
@@ -48,6 +50,10 @@ function JournalForm({ onSubmit }) {
     }
   }, [isFormReadyToSubmit, onSubmit, values]);
 
+  useEffect(() => {
+    dispatchForm({ type: 'SET_VALUE', payload: { userId } });
+  }, [userId]);
+
   const onChange = (e) => {
     dispatchForm({
       type: 'SET_VALUE',
@@ -70,8 +76,8 @@ function JournalForm({ onSubmit }) {
           name="title"
           type="text"
           ref={titleRef}
-          onChange={onChange}
           value={values.title}
+          onChange={onChange}
         />
       </div>
 
@@ -86,10 +92,10 @@ function JournalForm({ onSubmit }) {
           name="date"
           type="date"
           ref={dateRef}
-          onChange={onChange}
           value={
             values.date ? new Date(values.date).toISOString().slice(0, 10) : ''
           }
+          onChange={onChange}
         />
       </div>
 
@@ -102,8 +108,8 @@ function JournalForm({ onSubmit }) {
           id="tag"
           name="tag"
           type="text"
-          onChange={onChange}
           value={values.tag}
+          onChange={onChange}
         />
       </div>
 
@@ -113,11 +119,11 @@ function JournalForm({ onSubmit }) {
         })}
         id="post"
         name="post"
-        ref={postRef}
-        onChange={onChange}
-        value={values.post}
         cols="30"
         rows="10"
+        ref={postRef}
+        value={values.post}
+        onChange={onChange}
       ></textarea>
       <Button text="Сохранить" />
     </form>

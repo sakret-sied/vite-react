@@ -8,10 +8,10 @@ const Input = forwardRef(function Input(
 ) {
   return (
     <input
-      className={classNames(className, styles['input'], {
+      {...props}
+      className={classNames(styles['input'], className, {
         [styles['invalid']]: !isValid
       })}
-      {...props}
       ref={ref}
     />
   );

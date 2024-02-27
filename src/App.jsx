@@ -3,6 +3,7 @@ import Header from './components/Header/Header.jsx';
 import JournalAddItem from './components/JournalAddItem/JournalAddItem.jsx';
 import JournalForm from './components/JournalForm/JournalForm.jsx';
 import JournalList from './components/JournalList/JournalList.jsx';
+import { UserContextProvidev } from './context/user.context.jsx';
 import { mapItems } from './helpers/map.helper.js';
 import { useLocalStorage } from './hooks/useLocalStorage.hook.js';
 import Body from './layouts/Body/Body.jsx';
@@ -15,26 +16,26 @@ function App() {
     setItems([
       ...mapItems(items),
       {
-        id: Math.max(...items.map((i) => i.id), 0) + 1,
-        title: item.title,
+        ...item,
         date: new Date(item.date),
-        post: item.post,
-        tag: item.tag
+        id: Math.max(...items.map((i) => i.id), 0) + 1
       }
     ]);
   };
 
   return (
-    <div className="app">
-      <LeftPanel>
-        <Header />
-        <JournalAddItem />
-        <JournalList items={mapItems(items)} />
-      </LeftPanel>
-      <Body>
-        <JournalForm onSubmit={addItem} />
-      </Body>
-    </div>
+    <UserContextProvidev>
+      <div className="app">
+        <LeftPanel>
+          <Header />
+          <JournalAddItem />
+          <JournalList items={mapItems(items)} />
+        </LeftPanel>
+        <Body>
+          <JournalForm onSubmit={addItem} />
+        </Body>
+      </div>
+    </UserContextProvidev>
   );
 }
 
