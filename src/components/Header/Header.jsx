@@ -1,10 +1,10 @@
-import styles from './Header.module.css';
+import Logo from '../Logo/Logo.jsx';
 import SelectUser from '../SelectUser/SelectUser.jsx';
 
 function Header() {
   return (
     <>
-      <img className={styles.logo} src="/logo.svg" alt="Logo icon" />
+      <Logo image="/logo.svg" />
       <SelectUser />
     </>
   );

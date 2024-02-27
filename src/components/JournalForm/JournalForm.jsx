@@ -125,7 +125,7 @@ function JournalForm({ onSubmit }) {
         value={values.post}
         onChange={onChange}
       ></textarea>
-      <Button text="Сохранить" />
+      <Button>Сохранить</Button>
     </form>
   );
 }
