@@ -3,11 +3,11 @@ import { useContext, useEffect, useReducer, useRef } from 'react';
 import { UserContext } from '../../context/user.context.jsx';
 import Button from '../Button/Button.jsx';
 import Input from '../Input/Input.jsx';
+import { INITIAL_STATE, formReducer } from './JournalForm.state.js';
 import inputStyles from '../Input/Input.module.css';
 import styles from './JournalForm.module.css';
-import { INITIAL_STATE, formReducer } from './JournalForm.state.js';
 
-function JournalForm({ onSubmit }) {
+function JournalForm({ data, setData, onSubmit, onDelete }) {
   const [formState, dispatchForm] = useReducer(formReducer, INITIAL_STATE);
   const { isValid, isFormReadyToSubmit, values } = formState;
   const titleRef = useRef();
@@ -28,6 +28,14 @@ function JournalForm({ onSubmit }) {
         break;
     }
   };
+
+  useEffect(() => {
+    if (!data) {
+      dispatchForm({ type: 'CLEAR' });
+      dispatchForm({ type: 'SET_VALUE', payload: { userId } });
+    }
+    dispatchForm({ type: 'SET_VALUE', payload: { ...data } });
+  }, [data, userId]);
 
   useEffect(() => {
     let timerId;
@@ -51,8 +59,10 @@ function JournalForm({ onSubmit }) {
   }, [isFormReadyToSubmit, onSubmit, values]);
 
   useEffect(() => {
+    setData(null);
+    dispatchForm({ type: 'CLEAR' });
     dispatchForm({ type: 'SET_VALUE', payload: { userId } });
-  }, [userId]);
+  }, [setData, userId]);
 
   const onChange = (e) => {
     dispatchForm({
@@ -66,9 +76,14 @@ function JournalForm({ onSubmit }) {
     dispatchForm({ type: 'SUBMIT' });
   };
 
+  const deleteJournalItem = (id) => {
+    onDelete(id);
+    dispatchForm({ type: 'CLEAR' });
+  };
+
   return (
     <form className={styles['journal-form']} onSubmit={addJournalItem}>
-      <div>
+      <div className={styles['form-row']}>
         <Input
           isValid={isValid.title}
           className={inputStyles['input-title']}
@@ -79,6 +94,15 @@ function JournalForm({ onSubmit }) {
           value={values.title}
           onChange={onChange}
         />
+        {data?.id && (
+          <button
+            className={styles['delete']}
+            type="button"
+            onClick={() => deleteJournalItem(data.id)}
+          >
+            <img src="/archive.svg" alt="Archive icon" />
+          </button>
+        )}
       </div>
 
       <div className={styles['form-row']}>

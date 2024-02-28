@@ -1,11 +1,12 @@
-import { createContext, useState } from 'react';
+import { createContext } from 'react';
+import { useLocalStorage } from '../hooks/useLocalStorage.hook.js';
 
 export const UserContext = createContext({
   userId: 1
 });
 
 export const UserContextProvidev = ({ children }) => {
-  const [userId, setUserId] = useState(2);
+  const [userId, setUserId] = useLocalStorage('userId', false);
 
   return (
     <UserContext.Provider value={{ userId, setUserId }}>

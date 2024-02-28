@@ -1,13 +1,13 @@
 import CardButton from '../CardButton/CardButton.jsx';
-import './JournalAddItem.css';
+import './JournalAddButton.css';
 
-function JournalAddItem() {
+function JournalAddButton({ clearForm }) {
   return (
-    <CardButton className="journal-add">
+    <CardButton className="journal-add" onClick={clearForm}>
       <img src="/add.svg" alt="Add icon" />
       Новое воспоминание
     </CardButton>
   );
 }
 
-export default JournalAddItem;
+export default JournalAddButton;
