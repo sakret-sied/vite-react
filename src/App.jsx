@@ -4,20 +4,20 @@ import Header from './components/Header/Header.jsx';
 import JournalAddButton from './components/JournalAddButton/JournalAddButton.jsx';
 import JournalForm from './components/JournalForm/JournalForm.jsx';
 import JournalList from './components/JournalList/JournalList.jsx';
-import { UserContextProvidev } from './context/user.context.jsx';
-import { mapItems } from './helpers/map.helper.js';
+import { UserContextProvider } from './context/user.context.jsx';
+import { mapData } from './helpers/data.helper.js';
 import { useLocalStorage } from './hooks/useLocalStorage.hook.js';
 import Body from './layouts/Body/Body.jsx';
 import LeftPanel from './layouts/LeftPanel/LeftPanel.jsx';
 
 function App() {
-  const [items, setItems] = useLocalStorage('data');
+  const [items, setItems] = useLocalStorage('data', mapData);
   const [selectedItem, setSelectedItem] = useState(null);
 
   const addItem = (item) => {
     if (!item.id) {
       setItems([
-        ...mapItems(items),
+        ...mapData(items),
         {
           ...item,
           date: new Date(item.date),
@@ -28,7 +28,7 @@ function App() {
     }
 
     setItems([
-      ...mapItems(items).map((i) => {
+      ...mapData(items).map((i) => {
         if (i.id === item.id) {
           return {
             ...item
@@ -44,12 +44,12 @@ function App() {
   };
 
   return (
-    <UserContextProvidev>
+    <UserContextProvider>
       <div className="app">
         <LeftPanel>
           <Header />
           <JournalAddButton clearForm={() => setSelectedItem(null)} />
-          <JournalList items={mapItems(items)} setItem={setSelectedItem} />
+          <JournalList items={mapData(items)} setItem={setSelectedItem} />
         </LeftPanel>
         <Body>
           <JournalForm
@@ -60,7 +60,7 @@ function App() {
           />
         </Body>
       </div>
-    </UserContextProvidev>
+    </UserContextProvider>
   );
 }
 

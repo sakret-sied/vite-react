@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
-import { mapItems } from '../helpers/map.helper.js';
 
-export function useLocalStorage(key, parseMap = true) {
+export function useLocalStorage(key, func = false) {
   const [data, setData] = useState();
 
   useEffect(() => {
     const res = JSON.parse(localStorage.getItem(key));
-    const data = parseMap ? mapItems(res) : res;
+    const data = func ? func(res) : res;
     setData(data);
-  }, [key, parseMap]);
+  }, [key, func]);
 
   const saveData = (newData) => {
     localStorage.setItem(key, JSON.stringify(newData));

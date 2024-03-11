@@ -31,8 +31,7 @@ function JournalForm({ data, setData, onSubmit, onDelete }) {
 
   useEffect(() => {
     if (!data) {
-      dispatchForm({ type: 'CLEAR' });
-      dispatchForm({ type: 'SET_VALUE', payload: { userId } });
+      dispatchForm({ type: 'CLEAR', payload: { userId } });
     }
     dispatchForm({ type: 'SET_VALUE', payload: { ...data } });
   }, [data, userId]);
@@ -52,16 +51,17 @@ function JournalForm({ data, setData, onSubmit, onDelete }) {
   }, [isValid]);
 
   useEffect(() => {
-    if (isFormReadyToSubmit) {
-      onSubmit(values);
-      dispatchForm({ type: 'CLEAR' });
+    if (!isFormReadyToSubmit) {
+      return;
     }
-  }, [isFormReadyToSubmit, onSubmit, values]);
+    onSubmit(values);
+    setData(null);
+    dispatchForm({ type: 'CLEAR', payload: { userId } });
+  }, [isFormReadyToSubmit, onSubmit, setData, userId, values]);
 
   useEffect(() => {
     setData(null);
-    dispatchForm({ type: 'CLEAR' });
-    dispatchForm({ type: 'SET_VALUE', payload: { userId } });
+    dispatchForm({ type: 'CLEAR', payload: { userId } });
   }, [setData, userId]);
 
   const onChange = (e) => {
@@ -78,7 +78,8 @@ function JournalForm({ data, setData, onSubmit, onDelete }) {
 
   const deleteJournalItem = (id) => {
     onDelete(id);
-    dispatchForm({ type: 'CLEAR' });
+    setData(null);
+    dispatchForm({ type: 'CLEAR', payload: { userId } });
   };
 
   return (

@@ -17,12 +17,14 @@ export function formReducer(state, action) {
   switch (action.type) {
     case 'SET_VALUE':
       return { ...state, values: { ...state.values, ...action.payload } };
-    case 'CLEAR':
+    case 'CLEAR': {
+      const values = { ...INITIAL_STATE.values, ...action.payload };
       return {
         ...state,
-        values: INITIAL_STATE.values,
+        values: values,
         isFormReadyToSubmit: false
       };
+    }
     case 'RESET_VALIDITY':
       return { ...state, isValid: INITIAL_STATE.isValid };
     case 'SUBMIT': {
